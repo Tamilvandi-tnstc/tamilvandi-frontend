@@ -6,16 +6,19 @@ function App() {
     const [to, setTo] = useState("");
     const [travelData, setTravelData] = useState([]);
 
-    const API_URL = "https://tamilvanditest.onrender.com";  // ✅ Use Online API
+    // ✅ Use Render Backend API
+    const API_URL = "https://tamilvandi-backend.onrender.com/api/travel";
 
-axios.get(`${API_URL}?from=${from}&to=${to}`)
-  .then(response => {
-    setResults(response.data);
-  })
-  .catch(error => {
-    console.error("API Error:", error);
-  });
+    const handleSearch = () => {
+        console.log(`Searching for: From=${from}, To=${to}`);  // Debug log
 
+        axios.get(API_URL, { params: { from, to } })
+        .then(response => {
+            console.log("API Response:", response.data);
+            setTravelData(response.data);
+        })
+        .catch(error => console.error("API Error:", error));
+    };
 
     return (
         <div style={{ padding: "20px" }}>
@@ -45,7 +48,7 @@ axios.get(`${API_URL}?from=${from}&to=${to}`)
                         </li>
                     ))
                 ) : (
-                    <li>Welcome to Tamilnadu largest travel database website</li>
+                    <li>Welcome to Tamil Nadu's largest travel database website</li>
                 )}
             </ul>
         </div>
